@@ -134,28 +134,33 @@ appropriate (i.e. `has_many`, `has_many through`, and `belongs_to`).
 
 #### Performance
 
-- `Performance#print_details`
+- `Performance#introduction`
   - should return a string formatted as follows:
-    `{artist name} performed {song title} at {venue name}`
+    `"Hello {venue name}!!! We are {artist name}!"`
+  - This simulates the artist introducing themselves at the start of a show
 
 #### Venue
 
-- `Venue#book_performance(artist, song_title, duration)`
-  - takes an `artist` (an instance of the `Artist` class), a `song_title`
-    (string), and `duration` (integer) as arguments, and creates a new
-    `performance` in the database associated with this venue and the artist
+- `Venue#concert_on(date)`
 
-- `Venue.oldest_venue`
-  - returns the `Venue` instance with the earliest opening year
+  - takes a `date` (string) as an argument and creates a new
+    `performance` associated with this venue
+  - the performance should have `song_title` of "Check, check.. test, test",
+    `duration` of 30 (soundcheck time), and be associated with the first artist
+    in the database
+  - returns the newly created performance
+
+- `Venue.most_performances`
+  - returns the `Venue` instance that has hosted the most performances
+  - in the case of a tie, return the venue that appears first in the database
 
 #### Artist
 
-- `Artist#performed_song?(song_title)`
-  - takes a `song_title` (string) and returns `true` if the artist has ever
-    performed a song with that title, `false` otherwise
+- `Artist#total_duration`
 
-- `Artist#transfer_performance(artist, performance)`
-  - takes an `artist` (an instance of the `Artist` class) and a `performance`
-    (an instance of the `Performance` class) and changes the performance's
-    artist from the current artist to the new artist
-  - this method should return the performance instance
+  - returns the total duration (in seconds) of all the artist's performances
+  - if the artist has no performances, return 0
+
+- `Artist#plays_at_venue?(venue)`
+  - takes a `venue` (an instance of the `Venue` class) and returns `true` if
+    the artist has ever performed at that venue, `false` otherwise

@@ -47,8 +47,8 @@ end
 
 ```ruby
 # app/models/performance.rb
-def print_details
-  "#{self.artist.name} performed #{self.song_title} at #{self.venue.name}"
+def introduction
+  "Hello #{self.venue.name}!!! We are #{self.artist.name}!"
 end
 ```
 
@@ -56,12 +56,21 @@ end
 
 ```ruby
 # app/models/venue.rb
-def book_performance(artist, song_title, duration)
-  Performance.create(artist: artist, song_title: song_title, duration: duration, venue: self)
+def concert_on(date)
+  first_artist = Artist.first
+  Performance.create(
+    song_title: "Check, check.. test, test",
+    duration: 30,
+    artist: first_artist,
+    venue: self
+  )
 end
 
-def self.oldest_venue
-  self.order(:opening_year).first
+def self.most_performances
+  self.joins(:performances)
+      .group('venues.id')
+      .order('COUNT(performances.id) DESC')
+      .first
 end
 ```
 
@@ -69,12 +78,11 @@ end
 
 ```ruby
 # app/models/artist.rb
-def performed_song?(song_title)
-  self.performances.exists?(song_title: song_title)
+def total_duration
+  self.performances.sum(:duration)
 end
 
-def transfer_performance(artist, performance)
-  performance.update(artist: artist)
-  performance
+def plays_at_venue?(venue)
+  self.venues.include?(venue)
 end
 ```
