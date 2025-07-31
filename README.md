@@ -143,15 +143,17 @@ appropriate (i.e. `has_many`, `has_many through`, and `belongs_to`).
 
 - `Venue#concert_on(date)`
 
-  - takes a `date` (string) as an argument and creates a new
-    `performance` associated with this venue
+  - takes a `date` (string) as an argument and creates a new `performance`
+    associated with this venue
   - the performance should have `song_title` of "Check, check.. test, test",
     `duration` of 30 (soundcheck time), and be associated with the first artist
-    in the database
+    in the database (using `Artist.first`)
   - returns the newly created performance
 
 - `Venue.most_performances`
   - returns the `Venue` instance that has hosted the most performances
+  - uses ActiveRecord methods to join with performances, group by venue,
+    order by count descending, and return the first result
   - in the case of a tie, return the venue that appears first in the database
 
 #### Artist
@@ -159,8 +161,10 @@ appropriate (i.e. `has_many`, `has_many through`, and `belongs_to`).
 - `Artist#total_duration`
 
   - returns the total duration (in seconds) of all the artist's performances
+  - uses ActiveRecord's `sum` method on the performances association
   - if the artist has no performances, return 0
 
 - `Artist#plays_at_venue?(venue)`
   - takes a `venue` (an instance of the `Venue` class) and returns `true` if
     the artist has ever performed at that venue, `false` otherwise
+  - uses the `include?` method on the artist's venues association

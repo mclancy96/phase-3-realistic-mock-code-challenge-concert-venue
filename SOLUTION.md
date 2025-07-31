@@ -57,6 +57,7 @@ end
 ```ruby
 # app/models/venue.rb
 def concert_on(date)
+  # Note: date parameter is accepted but not stored - used as trigger for soundcheck
   first_artist = Artist.first
   Performance.create(
     song_title: "Check, check.. test, test",
@@ -67,6 +68,7 @@ def concert_on(date)
 end
 
 def self.most_performances
+  # Join with performances, group by venue, order by count (descending), get first
   self.joins(:performances)
       .group('venues.id')
       .order('COUNT(performances.id) DESC')
@@ -79,10 +81,12 @@ end
 ```ruby
 # app/models/artist.rb
 def total_duration
+  # Sum all performance durations for this artist
   self.performances.sum(:duration)
 end
 
 def plays_at_venue?(venue)
+  # Check if venue is in the artist's venues collection
   self.venues.include?(venue)
 end
 ```
