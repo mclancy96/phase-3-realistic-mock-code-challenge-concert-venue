@@ -56,12 +56,12 @@ end
 
 ```ruby
 # app/models/venue.rb
-def concert_on(date)
-  # Note: date parameter is accepted but not stored - used as trigger for soundcheck
+def anniversary_show
+  # Create anniversary performance using venue's name
   first_artist = Artist.first
   Performance.create(
-    song_title: "Check, check.. test, test",
-    duration: 30,
+    song_title: "Happy Anniversary #{self.name}!",
+    duration: 240,
     artist: first_artist,
     venue: self
   )

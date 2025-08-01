@@ -141,12 +141,12 @@ appropriate (i.e. `has_many`, `has_many through`, and `belongs_to`).
 
 #### Venue
 
-- `Venue#concert_on(date)`
+- `Venue#anniversary_show`
 
-  - takes a `date` (string) as an argument and creates a new `performance`
-    associated with this venue
-  - the performance should have `song_title` of "Check, check.. test, test",
-    `duration` of 30 (soundcheck time), and be associated with the first artist
+  - creates a new `performance` associated with this venue to celebrate the venue's anniversary
+  - the performance should have `song_title` of "Happy Anniversary {venue name}!",
+    where `{venue name}` is replaced with the actual venue name
+  - `duration` of 240 (4 minutes), and be associated with the first artist
     in the database (using `Artist.first`)
   - returns the newly created performance
 
